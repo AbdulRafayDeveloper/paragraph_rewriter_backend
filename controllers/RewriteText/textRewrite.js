@@ -159,7 +159,7 @@ const fluentTextRewrite = async (req, res) => {
           return successResponse(res, 'Text written in Academic tone', rewrittenText);
       }
       else {
-  
+  // How
           return serverErrorResponse(res, 'Failed to rewrite text in Academic tone');
       }
      
