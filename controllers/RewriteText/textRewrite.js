@@ -1,174 +1,207 @@
-import { runGroqQuery } from '../../helpers/grokIntegration.js';
-import { 
-  successResponse, 
-  badRequestResponse, 
-  serverErrorResponse 
-} from '../../helpers/apiResponses.js';
+import { runGroqQuery } from "../../helpers/grokIntegration.js";
+import {
+  successResponse,
+  badRequestResponse,
+  serverErrorResponse,
+} from "../../helpers/apiResponses.js";
 
-
-
+// API FOR NORMAL TEXT REWRITE
 const normalTextRewrite = async (req, res) => {
   try {
-
     const { message } = req.body;
-    
+
     if (!message) {
-        return badRequestResponse(res, "All fields are mandatory", null);
+      return badRequestResponse(res, "All fields are mandatory", null);
     }
-    
-    const rewrittenText = await runGroqQuery(message, 'Normal');
 
-    if( rewrittenText) {
+    const rewrittenText = await runGroqQuery(
+      message,
+      "Normal tone without adding any introductory phrases"
+    );
 
-        return successResponse(res, 'Text written in Normal tone', rewrittenText);
+    if (rewrittenText.status === 200) {
+      const formattedText = rewrittenText.replace(/\n/g, " ");
+      return successResponse(res, "Text rewritten successfully", formattedText);
+    } else if (rewrittenText.status === 400) {
+      return badRequestResponse(res, rewrittenText.message, null);
+    } else {
+      return serverErrorResponse(
+        res,
+        "Internal server error. Please try again later!"
+      );
     }
-    else {
-
-        return serverErrorResponse(res, 'Failed to rewrite text in Normal tone');
-    }
-   
-
   } catch (error) {
-    
-    return serverErrorResponse(res, "Internal server error. Please try again later!");
+    return serverErrorResponse(
+      res,
+      "Internal server error. Please try again later!"
+    );
   }
 };
 
+// API FOR FLUENT TEXT REWIRTE
 const fluentTextRewrite = async (req, res) => {
-    try {
-  
-      const { message } = req.body;
-      
-      if (!message) {
-          return badRequestResponse(res, "All fields are mandatory", null);
-      }
-      
-      const rewrittenText = await runGroqQuery(message, 'Fluent');
-  
-      if( rewrittenText) {
-  
-          return successResponse(res, 'Text written in Fluent tone', rewrittenText);
-      }
-      else {
-  
-          return serverErrorResponse(res, 'Failed to rewrite text in Fluent tone');
-      }
-     
-  
-    } catch (error) {
-      
-      return serverErrorResponse(res, "Internal server error. Please try again later");
-    }
-  };
+  try {
+    const { message } = req.body;
 
-  const formalTextRewrite = async (req, res) => {
-    try {
-  
-      const { message } = req.body;
-      
-      if (!message) {
-          return badRequestResponse(res, "All fields are mandatory", null);
-      }
-      
-      const rewrittenText = await runGroqQuery(message, 'Formal');
-  
-      if( rewrittenText) {
-  
-          return successResponse(res, 'Text written in Formal tone', rewrittenText);
-      }
-      else {
-  
-          return serverErrorResponse(res, 'Failed to rewrite text in Formal tone');
-      }
-     
-  
-    } catch (error) {
-      
-      return serverErrorResponse(res, "Internal server error. Please try again later");
+    if (!message) {
+      return badRequestResponse(res, "All fields are mandatory", null);
     }
-  };  
 
-  const innovativeTextRewrite = async (req, res) => {
-    try {
-  
-      const { message } = req.body;
-      
-      if (!message) {
-          return badRequestResponse(res, "All fields are mandatory", null);
-      }
-      
-      const rewrittenText = await runGroqQuery(message, 'Innovative');
-  
-      if( rewrittenText) {
-  
-          return successResponse(res, 'Text written in Innovative tone', rewrittenText);
-      }
-      else {
-  
-          return serverErrorResponse(res, 'Failed to rewrite text in Innovative tone');
-      }
-     
-  
-    } catch (error) {
-      
-      return serverErrorResponse(res, "Internal server error. Please try again later");
-    }
-  };
+    const rewrittenText = await runGroqQuery(
+      message,
+      "Fluent tone without adding any introductory phrases"
+    );
 
-  
-  const coherentTextRewrite = async (req, res) => {
-    try {
-  
-      const { message } = req.body;
-      
-      if (!message) {
-          return badRequestResponse(res, "All fields are mandatory", null);
-      }
-      
-      const rewrittenText = await runGroqQuery(message, 'Coherent');
-  
-      if( rewrittenText) {
-  
-          return successResponse(res, 'Text written in Coherent tone', rewrittenText);
-      }
-      else {
-  
-          return serverErrorResponse(res, 'Failed to rewrite text in Coherent tone');
-      }
-     
-  
-    } catch (error) {
-      
-      return serverErrorResponse(res, "Internal server error. Please try again later");
+    if (rewrittenText.status === 200) {
+      const formattedText = rewrittenText.replace(/\n/g, " ");
+      return successResponse(res, "Text rewritten successfully", formattedText);
+    } else if (rewrittenText.status === 400) {
+      return badRequestResponse(res, rewrittenText.message, null);
+    } else {
+      return serverErrorResponse(
+        res,
+        "Internal server error. Please try again later"
+      );
     }
-  };
+  } catch (error) {
+    return serverErrorResponse(
+      res,
+      "Internal server error. Please try again later"
+    );
+  }
+};
 
-  const academicTextRewrite = async (req, res) => {
-    try {
-  
-      const { message } = req.body;
-      
-      if (!message) {
-          return badRequestResponse(res, "All fields are mandatory", null);
-      }
-      
-      const rewrittenText = await runGroqQuery(message, 'Academic');
-  
-      if( rewrittenText) {
-  
-          return successResponse(res, 'Text written in Academic tone', rewrittenText);
-      }
-      else {
-  // How
-          return serverErrorResponse(res, 'Failed to rewrite text in Academic tone');
-      }
-     
-  
-    } catch (error) {
-      
-      return serverErrorResponse(res, "Internal server error. Please try again later");
+// API FOR FORMAL TEXT REWRITE
+const formalTextRewrite = async (req, res) => {
+  try {
+    const { message } = req.body;
+
+    if (!message) {
+      return badRequestResponse(res, "All fields are mandatory", null);
     }
-  };
+
+    const rewrittenText = await runGroqQuery(
+      message,
+      "Formal tone without adding any introductory phrases"
+    );
+
+    if (rewrittenText.status === 200) {
+      const formattedText = rewrittenText.replace(/\n/g, " ");
+      return successResponse(res, "Text rewritten successfully", formattedText);
+    } else if (rewrittenText.status === 400) {
+      return badRequestResponse(res, rewrittenText.message, null);
+    } else {
+      return serverErrorResponse(
+        res,
+        "Internal server error. Please try again later"
+      );
+    }
+  } catch (error) {
+    return serverErrorResponse(
+      res,
+      "Internal server error. Please try again later"
+    );
+  }
+};
+
+// API FOR INNOVATIVE TEXT REWRITE
+const innovativeTextRewrite = async (req, res) => {
+  try {
+    const { message } = req.body;
+
+    if (!message) {
+      return badRequestResponse(res, "All fields are mandatory", null);
+    }
+
+    const rewrittenText = await runGroqQuery(
+      message,
+      "Innovative tone without adding any introductory phrases"
+    );
+
+    if (rewrittenText.status === 200) {
+      const formattedText = rewrittenText.replace(/\n/g, " ");
+      return successResponse(res, "Text rewritten successfully", formattedText);
+    } else if (rewrittenText.status === 400) {
+      return badRequestResponse(res, rewrittenText.message, null);
+    } else {
+      return serverErrorResponse(
+        res,
+        "Internal server error. Please try again later"
+      );
+    }
+  } catch (error) {
+    return serverErrorResponse(
+      res,
+      "Internal server error. Please try again later"
+    );
+  }
+};
+
+// API FOR COHERENT TEXT REWRITE
+const coherentTextRewrite = async (req, res) => {
+  try {
+    const { message } = req.body;
+
+    if (!message) {
+      return badRequestResponse(res, "All fields are mandatory", null);
+    }
+
+    const rewrittenText = await runGroqQuery(
+      message,
+      "Coherent tone without adding any introductory phrases"
+    );
+
+    if (rewrittenText.status === 200) {
+      const formattedText = rewrittenText.replace(/\n/g, " ");
+      return successResponse(res, "Text rewritten successfully", formattedText);
+    } else if (rewrittenText.status === 400) {
+      return badRequestResponse(res, rewrittenText.message, null);
+    } else {
+      return serverErrorResponse(
+        res,
+        "Internal server error. Please try again later"
+      );
+    }
+  } catch (error) {
+    return serverErrorResponse(
+      res,
+      "Internal server error. Please try again later"
+    );
+  }
+};
+
+// API FOR ACADEMIC TEXT REWRITE
+const academicTextRewrite = async (req, res) => {
+  try {
+    const { message } = req.body;
+
+    if (!message) {
+      return badRequestResponse(res, "All fields are mandatory", null);
+    }
+
+    const rewrittenText = await runGroqQuery(
+      message,
+      "Academic tone without adding any introductory phrases"
+    );
+
+    if (rewrittenText.status === 200) {
+      const formattedText = rewrittenText.replace(/\n/g, " ");
+      return successResponse(res, "Text rewritten successfully", formattedText);
+    } else if (rewrittenText.status === 400) {
+      return badRequestResponse(res, rewrittenText.message, null);
+    } else {
+      return serverErrorResponse(
+        res,
+        "Internal server error. Please try again later"
+      );
+    }
+  } catch (error) {
+    return serverErrorResponse(
+      res,
+      "Internal server error. Please try again later"
+    );
+  }
+};
 
 export {
   normalTextRewrite,
@@ -176,6 +209,5 @@ export {
   formalTextRewrite,
   innovativeTextRewrite,
   coherentTextRewrite,
-  academicTextRewrite
-
-}
+  academicTextRewrite,
+};
