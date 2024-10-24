@@ -16,7 +16,7 @@ const normalTextRewrite = async (req, res) => {
 
     const rewrittenText = await runGroqQuery(
       message,
-      "Normal tone without adding any introductory phrases"
+      "Normal tone and dont use any kind of introductory phrases of text like 'here is te rewritten text' etc"
     );
 
     if (rewrittenText.status) {
@@ -50,7 +50,7 @@ const fluentTextRewrite = async (req, res) => {
 
     const rewrittenText = await runGroqQuery(
       message,
-      "Fluent tone without adding any introductory phrases"
+      "Fluent tone and dont use any kind of introductory phrases of text like 'here is te rewritten text' etc"
     );
 
     if (rewrittenText.status === 200) {
@@ -83,7 +83,7 @@ const formalTextRewrite = async (req, res) => {
 
     const rewrittenText = await runGroqQuery(
       message,
-      "Formal tone without adding any introductory phrases"
+      "Formal tone and dont use any kind of introductory phrases of text like 'here is te rewritten text' etc"
     );
 
     if (rewrittenText.status === 200) {
@@ -116,7 +116,7 @@ const innovativeTextRewrite = async (req, res) => {
 
     const rewrittenText = await runGroqQuery(
       message,
-      "Innovative tone without adding any introductory phrases"
+      "Innovative tone and dont use any kind of introductory phrases of text like 'here is te rewritten text' etc"
     );
 
     if (rewrittenText.status === 200) {
@@ -149,7 +149,7 @@ const coherentTextRewrite = async (req, res) => {
 
     const rewrittenText = await runGroqQuery(
       message,
-      "Coherent tone without adding any introductory phrases"
+      "Coherent tone and dont use any kind of introductory phrases of text like 'here is te rewritten text' etc"
     );
 
     if (rewrittenText.status === 200) {
@@ -182,7 +182,7 @@ const academicTextRewrite = async (req, res) => {
 
     const rewrittenText = await runGroqQuery(
       message,
-      "Academic tone without adding any introductory phrases"
+      "Academic tone and dont use any kind of introductory phrases of text like 'here is te rewritten text' etc"
     );
 
     if (rewrittenText.status === 200) {
