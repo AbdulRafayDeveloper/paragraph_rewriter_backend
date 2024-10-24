@@ -26,8 +26,9 @@ const runGroqQuery = async (message, tone) => {
 
     const responseContent =
       chatCompletion.choices[0]?.message?.content || "No response from Groq";
-    return responseContent;
+      return { status: 200, message: "Success", content: responseContent };
   } catch (error) {
+    console.error("Error in runGroqQuery:", error);
     return {status: 500, message: "Internal server error. Please try again later"}
   }
 };
