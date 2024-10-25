@@ -23,5 +23,5 @@ app.use('/api/rewrite', rewriteRoutes);
 app.use('/api/user', userAuthRoutes);
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+  console.log(`Server running on port ${port}`);
 });
