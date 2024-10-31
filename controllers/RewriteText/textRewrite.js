@@ -20,7 +20,7 @@ const normalTextRewrite = async (req, res) => {
     );
 
     if (rewrittenText.status) {
-      const formattedText = rewrittenText.content.replace(/\n/g, " ");
+      const formattedText = rewrittenText.content.replace(/\n/g, "");
       return successResponse(res, "Text rewritten successfully", formattedText);
     } else if (rewrittenText.status === 400) {
       return badRequestResponse(res, rewrittenText.message, null);
@@ -54,7 +54,7 @@ const fluentTextRewrite = async (req, res) => {
     );
 
     if (rewrittenText.status === 200) {
-      const formattedText = rewrittenText.content.replace(/\n/g, " ");
+      const formattedText = rewrittenText.content.replace(/\n/g, "");
       return successResponse(res, "Text rewritten successfully", formattedText);
     } else if (rewrittenText.status === 400) {
       return badRequestResponse(res, rewrittenText.message, null);
@@ -87,7 +87,7 @@ const formalTextRewrite = async (req, res) => {
     );
 
     if (rewrittenText.status === 200) {
-      const formattedText = rewrittenText.content.replace(/\n/g, " ");
+      const formattedText = rewrittenText.content.replace(/\n/g, "");
       return successResponse(res, "Text rewritten successfully", formattedText);
     } else if (rewrittenText.status === 400) {
       return badRequestResponse(res, rewrittenText.message, null);
@@ -120,7 +120,7 @@ const innovativeTextRewrite = async (req, res) => {
     );
 
     if (rewrittenText.status === 200) {
-      const formattedText = rewrittenText.content.replace(/\n/g, " ");
+      const formattedText = rewrittenText.content.replace(/\n/g, "");
       return successResponse(res, "Text rewritten successfully", formattedText);
     } else if (rewrittenText.status === 400) {
       return badRequestResponse(res, rewrittenText.message, null);
@@ -153,7 +153,7 @@ const coherentTextRewrite = async (req, res) => {
     );
 
     if (rewrittenText.status === 200) {
-      const formattedText = rewrittenText.content.replace(/\n/g, " ");
+      const formattedText = rewrittenText.content.replace(/\n/g, "");
       return successResponse(res, "Text rewritten successfully", formattedText);
     } else if (rewrittenText.status === 400) {
       return badRequestResponse(res, rewrittenText.message, null);
@@ -186,7 +186,7 @@ const academicTextRewrite = async (req, res) => {
     );
 
     if (rewrittenText.status === 200) {
-      const formattedText = rewrittenText.content.replace(/\n/g, " ");
+      const formattedText = rewrittenText.content.replace(/\n/g, "");
       return successResponse(res, "Text rewritten successfully", formattedText);
     } else if (rewrittenText.status === 400) {
       return badRequestResponse(res, rewrittenText.message, null);

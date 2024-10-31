@@ -11,9 +11,19 @@ const findOneUser = async (data) => {
 };
 
 const createUser = async (data) => {
-  const user = new User(data); 
+  const user = new User(data);
   await user.save();
   return user;
 };
 
-export { findUser, findOneUser, createUser };
+const getAllUsers = async () => {
+  const users = await User.find();
+  return users;
+};
+
+const getUserById = async (id) => {
+  const user = await User.findById(id);
+  return user;
+};
+
+export { findUser, findOneUser, createUser, getAllUsers, getUserById };

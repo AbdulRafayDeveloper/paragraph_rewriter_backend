@@ -22,6 +22,9 @@ app.use('/api/rewrite', rewriteRoutes);
 
 app.use('/api/user', userAuthRoutes);
 
+app.use("/api/user", userRoutes);
+
+app.use("/api/file", fileUploadRoutes);
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
