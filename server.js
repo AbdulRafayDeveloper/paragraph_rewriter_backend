@@ -3,7 +3,10 @@ import dotenv from 'dotenv';
 import rewriteRoutes from './routes/RewriteText/textRewriteRoutes.js';
 import userAuthRoutes from './routes/user/auth.js';
 import connectDb from './config/dbConnection.js';
+import userRoutes from './routes/user/usersRoutes.js';
+import fileUploadRoutes from './routes/fileUpload/fileUploadRoutes.js';
 import cors from "cors";
+
 
 dotenv.config();
 
