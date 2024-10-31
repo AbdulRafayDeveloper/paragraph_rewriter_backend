@@ -65,7 +65,7 @@ const loginUser = async (req, res) => {
       );
       return successResponse(
         res,
-        "User has been logged in successfully",
+        "User has logged in successfully",
         userLoginToken
       );
     } else if (user && passwordCheck && user.role === "admin") {
@@ -79,7 +79,7 @@ const loginUser = async (req, res) => {
       );
       return successResponse(
         res,
-        "Admin has been logged in successfully",
+        "Admin has logged in successfully",
         adminLoginToken
       );
     } else {
