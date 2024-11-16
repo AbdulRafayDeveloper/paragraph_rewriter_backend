@@ -1,4 +1,10 @@
-import { getAllUsers, getUserById, deleteUser, countUsers, listUsers } from "../../services/userServices.js";
+import {
+  getAllUsers,
+  getUserById,
+  deleteUser,
+  countUsers,
+  listUsers,
+} from "../../services/userServices.js";
 import {
   badRequestResponse,
   notFoundResponse,
@@ -11,7 +17,7 @@ const getAllUsersController = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.limit) || 10;
-    const searchQuery = req.query.search || '';
+    const searchQuery = req.query.search || "";
     const userId = req.user._id;
     if (!userId) {
       return unauthorizedResponse(
@@ -23,21 +29,21 @@ const getAllUsersController = async (req, res) => {
     let query = {};
     if (searchQuery) {
       query.$or = [
-        { name: { $regex: searchQuery, $options: 'i' } },
-        { email: { $regex: searchQuery, $options: 'i' } },
+        { name: { $regex: searchQuery, $options: "i" } },
+        { email: { $regex: searchQuery, $options: "i" } },
       ];
     }
     const totalRecords = await countUsers(query);
     if (!totalRecords) {
-      return notFoundResponse(res, 'No users found.', null);
+      return notFoundResponse(res, "No users found.", null);
     }
     const totalPages = Math.ceil(totalRecords / pageSize);
     const skip = (page - 1) * pageSize;
     const users = await listUsers(query, skip, pageSize);
     if (!users || users.length === 0) {
-      return notFoundResponse(res, 'No users found for the given page.', null);
+      return notFoundResponse(res, "No users found for the given page.", null);
     }
-    return successResponse(res, 'Users fetched successfully.', {
+    return successResponse(res, "Users fetched successfully.", {
       records: users,
       pagination: {
         totalRecords,
@@ -47,7 +53,6 @@ const getAllUsersController = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error);
     return serverErrorResponse(
       res,
       "Internal Server Error. Please try again later!"
@@ -80,11 +85,15 @@ const getOneUserController = async (req, res) => {
   }
 };
 
-const deleteUserController = async (req,res) => {
+const deleteUserController = async (req, res) => {
   try {
     const userId = req.user._id;
     if (!userId) {
-      return unauthorizedResponse(res, "The user is not authorized for this action", null);
+      return unauthorizedResponse(
+        res,
+        "The user is not authorized for this action",
+        null
+      );
     }
     const id = req.params.id;
     const user = await getUserById(id);
@@ -94,13 +103,17 @@ const deleteUserController = async (req,res) => {
     const userDelete = await deleteUser(user);
     if (userDelete) {
       return successResponse(res, "User deleted successfully", userDelete);
-    }
-    else {
-      return serverErrorResponse(res, "Unable to delete user. Please try again later");
+    } else {
+      return serverErrorResponse(
+        res,
+        "Unable to delete user. Please try again later"
+      );
     }
   } catch (error) {
-    return serverErrorResponse(res, "Internal Server Error. Please try again later");
-    
+    return serverErrorResponse(
+      res,
+      "Internal Server Error. Please try again later"
+    );
   }
-}
+};
 export { getAllUsersController, getOneUserController, deleteUserController };
