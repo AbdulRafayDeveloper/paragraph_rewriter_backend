@@ -7,7 +7,6 @@ import userRoutes from './routes/user/usersRoutes.js';
 import fileUploadRoutes from './routes/fileUpload/fileUploadRoutes.js';
 import cors from "cors";
 
-
 dotenv.config();
 
 const app = express();
@@ -26,6 +25,8 @@ app.use('/api/rewrite', rewriteRoutes);
 app.use('/api/user', userAuthRoutes);
 
 app.use("/api/user", userRoutes);
+
+app.use("/api/user", contactUsRoutes);
 
 app.use("/api/file", fileUploadRoutes);
 app.listen(port, () => {

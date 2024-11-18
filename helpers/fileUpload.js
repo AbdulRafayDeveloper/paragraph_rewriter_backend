@@ -72,6 +72,7 @@ const extractTextFromPDF = async (buffer) => {
   });
 };
 
+
 const extractTextFromDocx = async (buffer) => {
   return new Promise((resolve, reject) => {
     textract.fromBufferWithMime(
