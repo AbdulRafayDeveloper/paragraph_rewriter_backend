@@ -16,9 +16,9 @@ app.use(cors());
 connectDb();
 const port = process.env.PORT || 8000;
 
-// app.get("/", (req, res) => {
-//     res.send('main project backend is working now')
-// })
+app.get("/", (req, res) => {
+    res.send('main project backend is working now')
+})
 
 app.use('/api/rewrite', rewriteRoutes);
 
