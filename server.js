@@ -14,19 +14,10 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// CORS Configuration
-const allowedOrigins = ['https://paragraph-rewriter-frontend.vercel.app'];
+// CORS Configuration: Allow all origins
 app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like Postman or Curl)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      return callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  origin: '*', // Allows all origins
+  credentials: true, // Allow credentials (if needed)
 }));
 
 connectDb();
