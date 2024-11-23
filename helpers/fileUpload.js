@@ -1,10 +1,20 @@
 import multer from "multer";
 import path from "path";
-import { PDFExtract } from "pdf.js-extract";
+// import { PDFExtract } from "pdf.js-extract";
 import textract from "textract";
 import { badRequestResponse, serverErrorResponse } from "./apiResponses.js";
+import pdfParse from "pdf-parse";
 
-const pdfExtract = new PDFExtract();
+const extractTextFromPDF = async (buffer) => {
+  try {
+    const data = await pdfParse(buffer);
+    return data.text; // Extracted text
+  } catch (err) {
+    throw new Error("Error extracting PDF text: " + err.message);
+  }
+};
+
+// const pdfExtract = new PDFExtract();
 
 const storage = multer.memoryStorage();
 const fileFilter = (req, file, cb) => {
@@ -60,17 +70,17 @@ export const readFileContent = async (file, res) => {
   }
 };
 
-const extractTextFromPDF = async (buffer) => {
-  return new Promise((resolve, reject) => {
-    pdfExtract.extractBuffer(buffer, {}, (err, data) => {
-      if (err) return reject(err);
-      const text = data.pages
-        .map((page) => page.content.map((item) => item.str).join(" "))
-        .join("\n");
-      resolve(text);
-    });
-  });
-};
+// const extractTextFromPDF = async (buffer) => {
+//   return new Promise((resolve, reject) => {
+//     pdfExtract.extractBuffer(buffer, {}, (err, data) => {
+//       if (err) return reject(err);
+//       const text = data.pages
+//         .map((page) => page.content.map((item) => item.str).join(" "))
+//         .join("\n");
+//       resolve(text);
+//     });
+//   });
+// };
 
 
 const extractTextFromDocx = async (buffer) => {
