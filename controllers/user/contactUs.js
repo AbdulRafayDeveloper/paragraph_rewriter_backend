@@ -16,7 +16,8 @@ import {
   successResponse,
   unauthorizedResponse,
 } from "../../helpers/apiResponses.js";
-
+import sendEmail from "../../helpers/emailHelper.js";
+import generateThankYouTemplate from "../../emailTemplates/thankYouTemplate.js";
 const createContactController = async (req, res) => {
   try {
     const { name, email, message } = req.body;
@@ -27,6 +28,11 @@ const createContactController = async (req, res) => {
     if (existingContact) {
       const updateContact = await updateContactMessages(email, message);
       if (updateContact) {
+        sendEmail(
+          email,
+          "Thanks for Contacting Us",
+          generateThankYouTemplate(name)
+        );
         return successResponse(
           res,
           "Another message added successfully",
@@ -42,6 +48,11 @@ const createContactController = async (req, res) => {
         messages: [{ message }],
       });
       if (contact) {
+        sendEmail(
+          email,
+          "Thanks for Contacting Us!",
+          generateThankYouTemplate(name)
+        );
         return successResponse(
           res,
           "Message has been deleivered succcessfully",
