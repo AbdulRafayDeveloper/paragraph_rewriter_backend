@@ -45,7 +45,7 @@ const authenticateLoginToken = async (req, res, next) => {
   }
 };
 
-const authenticatechangePassword = async (req, res, next) => {
+const authenticateUser = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -91,4 +91,4 @@ const authenticatechangePassword = async (req, res, next) => {
   }
 };
 
-export { authenticateLoginToken, authenticatechangePassword };
+export { authenticateLoginToken, authenticateUser };
