@@ -116,4 +116,12 @@ const deleteUserController = async (req, res) => {
     );
   }
 };
+
+const updateUserController = async (req,res) => {
+  try {
+    
+  } catch (error) {
+    
+  }
+};
 export { getAllUsersController, getOneUserController, deleteUserController };
