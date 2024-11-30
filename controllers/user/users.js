@@ -26,7 +26,7 @@ const getAllUsersController = async (req, res) => {
         null
       );
     }
-    let query = {};
+    let query = { role: { $ne: "admin" } };
     if (searchQuery) {
       query.$or = [
         { name: { $regex: searchQuery, $options: "i" } },
