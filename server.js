@@ -23,7 +23,7 @@ connectDb();
 const port = process.env.PORT || 8000;
 
 app.get("/", (req, res) => {
-  res.send('main project backend is working now');
+  res.send('Main project backend is working now');
 });
 
 // Routes
