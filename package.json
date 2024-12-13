@@ -17,6 +17,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "fs": "^0.0.1-security",
     "groq-sdk": "^0.7.0",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",

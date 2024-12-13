@@ -1,6 +1,7 @@
 import {
   getAllUsers,
   getUserById,
+  updateUser,
   deleteUser,
   countUsers,
   listUsers,
@@ -12,7 +13,8 @@ import {
   successResponse,
   unauthorizedResponse,
 } from "../../helpers/apiResponses.js";
-
+import fs from "fs";
+import path from "path";
 const getAllUsersController = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
@@ -117,16 +119,49 @@ const deleteUserController = async (req, res) => {
   }
 };
 
-const updateUserController = async (req,res) => {
+const updateUserController = async (req, res) => {
   try {
     const userId = req.user._id;
     if (!userId) {
-      return unauthorizedResponse(res, "The user is not authorized for this action", null);
+      return unauthorizedResponse(
+        res,
+        "The user is not authorized for this action",
+        null
+      );
     }
     const id = req.params.id;
-    
+    if (userId !== id) {
+      return unauthorizedResponse(res, "You can only update your own profile", null);
+    }
+    const findUser = await getUserById(id);
+    if (!findUser) {
+      return notFoundResponse(res, "User is not found", null);
+    }
+    const updates = { ...req.body };
+
+    if (req.file) {
+      updates.profilePicture = `/uploads/${req.file.filename}`;
+    }
+    const updatedUser = await updateUser(id, updates);
+    if (updatedUser) {
+      return successResponse(res, "User updated successfully", updatedUser);
+    } else {
+      return serverErrorResponse(
+        res,
+        "Failed to update user.Please try again later"
+      );
+    }
   } catch (error) {
-    
+    console.log(error);
+    return serverErrorResponse(
+      res,
+      "Internal Server Error. Please try again later!"
+    );
   }
 };
-export { getAllUsersController, getOneUserController, deleteUserController };
+export {
+  getAllUsersController,
+  getOneUserController,
+  deleteUserController,
+  updateUserController,
+};
