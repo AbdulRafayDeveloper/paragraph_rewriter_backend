@@ -130,7 +130,11 @@ const updateUserController = async (req, res) => {
     }
     const id = req.params.id;
     if (userId !== id) {
-      return unauthorizedResponse(res, "You can only update your own profile", null);
+      return unauthorizedResponse(
+        res,
+        "You can only update your own profile",
+        null
+      );
     }
     const findUser = await getUserById(id);
     if (!findUser) {
