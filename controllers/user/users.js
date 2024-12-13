@@ -13,7 +13,6 @@ import {
   successResponse,
   unauthorizedResponse,
 } from "../../helpers/apiResponses.js";
-import fs from "fs";
 import path from "path";
 const getAllUsersController = async (req, res) => {
   try {
