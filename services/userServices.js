@@ -31,6 +31,11 @@ const deleteUser = async (id) => {
   return deletedUser;
 };
 
+const updateUser = async (user_id, data) => {
+  const updatedUser = await User.findByIdAndUpdate(user_id, { $set: data }, { new: true });
+  return updatedUser;
+};
+
 const countUsers = async (query) => {
   return await User.countDocuments(query);
 };
@@ -45,6 +50,7 @@ export {
   getAllUsers,
   getUserById,
   deleteUser,
+  updateUser,
   countUsers,
   listUsers,
 };

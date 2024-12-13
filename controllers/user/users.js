@@ -119,6 +119,11 @@ const deleteUserController = async (req, res) => {
 
 const updateUserController = async (req,res) => {
   try {
+    const userId = req.user._id;
+    if (!userId) {
+      return unauthorizedResponse(res, "The user is not authorized for this action", null);
+    }
+    const id = req.params.id;
     
   } catch (error) {
     

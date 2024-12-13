@@ -28,7 +28,7 @@ const createContactController = async (req, res) => {
     if (existingContact) {
       const updateContact = await updateContactMessages(email, message);
       if (updateContact) {
-        sendEmail(
+        await sendEmail(
           email,
           "Thanks for Contacting Us",
           generateThankYouTemplate(name)
@@ -48,7 +48,7 @@ const createContactController = async (req, res) => {
         messages: [{ message }],
       });
       if (contact) {
-        sendEmail(
+        await sendEmail(
           email,
           "Thanks for Contacting Us!",
           generateThankYouTemplate(name)
