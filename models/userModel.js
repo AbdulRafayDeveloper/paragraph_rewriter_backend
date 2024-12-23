@@ -23,7 +23,11 @@ const userSchema = new mongoose.Schema(
     profilePicture : {
       type: String,
       default: null
-    }
+    },
+    otp: {
+      type: String,
+      default: null,
+    },
   },
   {
     timestamps: true,

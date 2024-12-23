@@ -13,6 +13,8 @@ import {
   findOneUser,
   createUser,
 } from "../../services/userServices.js";
+import generateForgetPasswordTemplate from "../../emailTemplates/forgetPasswordTemplate.js";
+import sendEmail from "../../helpers/emailHelper.js";
 
 const registerUser = async (req, res) => {
   try {
@@ -139,4 +141,49 @@ const changePassword = async (req, res) => {
     );
   }
 };
-export { registerUser, loginUser, changePassword };
+
+const forgetPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return badRequestResponse(res, "Email is required", null);
+    }
+
+    const user = await findOneUser({ email });
+    if (!user) {
+      return notFoundResponse(res, "User not found", null);
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    user.otp = otp;
+    await user.save();
+
+    const subject = "Reset Your Password";
+    const emailContent = generateForgetPasswordTemplate(user.name, otp);
+
+    await sendEmail(email, subject, emailContent);
+
+    const otpToken = jwt.sign(
+      {
+        email,
+        otp,
+      },
+      process.env.FORGET_PASSWORD_TOKEN,
+      { expiresIn: "1d" }
+    );
+
+    return successResponse(
+      res,
+      "OTP has been successfully sent to your email",
+      otpToken
+    );
+  } catch (error) {
+    console.log(error);
+    return serverErrorResponse(
+      res,
+      "Internal server error. Please try again later!"
+    );
+  }
+};
+export { registerUser, loginUser, changePassword, forgetPassword};
