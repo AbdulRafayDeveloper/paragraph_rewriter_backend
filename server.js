@@ -7,6 +7,7 @@ import userAuthRoutes from './routes/user/auth.js';
 import userRoutes from './routes/user/usersRoutes.js';
 import contactUsRoutes from './routes/user/contactUsRoutes.js';
 import fileUploadRoutes from './routes/fileUpload/fileUploadRoutes.js';
+import sentenceRewriterRoutes from './routes/sentenceRewriter/sentenceRewriter.js';
 import cors from "cors";
 
 dotenv.config();
@@ -34,6 +35,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/user', contactUsRoutes);
 app.use('/api/file', fileUploadRoutes);
 app.use('/api/paragraph', paragraphGeneratorRoutes);
+app.use('/api/rewrite', sentenceRewriterRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
