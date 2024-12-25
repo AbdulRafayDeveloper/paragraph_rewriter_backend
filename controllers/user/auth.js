@@ -12,6 +12,7 @@ import {
   findUser,
   findOneUser,
   createUser,
+  updateUser
 } from "../../services/userServices.js";
 import generateForgetPasswordTemplate from "../../emailTemplates/forgetPasswordTemplate.js";
 import sendEmail from "../../helpers/emailHelper.js";
@@ -129,7 +130,7 @@ const changePassword = async (req, res) => {
     if (newPassword !== confirmPassword) {
       return badRequestResponse(res, "Passwords do not match", null);
     }
-    
+
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     user.password = hashedPassword;
     await user.save();
@@ -186,4 +187,82 @@ const forgetPassword = async (req, res) => {
     );
   }
 };
-export { registerUser, loginUser, changePassword, forgetPassword};
+const verifyOtp = async (req, res) => {
+  try {
+    const { userOtp } = req.body; 
+    const { email, otp } = req.otpData;
+
+    if (!userOtp) {
+      return badRequestResponse(res, "OTP is required", null);
+    }
+    if (userOtp !== otp) {
+      return badRequestResponse(res, "Invalid OTP", null);
+    }
+    const user = await findOneUser({ email, otp });
+    if (!user) {
+      return notFoundResponse(
+        res,
+        "No user found with this email or OTP is invalid",
+        null
+      );
+    }
+    const otpAge = Date.now() - new Date(user.otpCreatedAt).getTime();
+    const otpValidityDuration = 60 * 1000;
+
+    if (otpAge > otpValidityDuration) {
+      await updateUser(user._id, { otp: null, otpCreatedAt: null });
+      return badRequestResponse(res, "OTP has expired", null);
+    }
+    const resetPasswordToken = jwt.sign(
+      process.env.RESET_PASSWORD_TOKEN,
+      { expiresIn: "1d" }
+    );
+    await updateUser(user._id, { otp: null, otpCreatedAt: null });
+    return successResponse(
+      res,
+      "OTP has been verified successfully",
+      resetPasswordToken
+    );
+  } catch (error) {
+    console.log(error);
+    return serverErrorResponse(
+      res,
+      "Internal server error. Please try again later!",
+    );
+  }
+};
+
+const resetPassword = async (req, res) => {
+  try {
+    const { newPassword, confirmPassword } = req.body;
+    const { email } = req;
+
+    if (!newPassword || !confirmPassword) {
+      return badRequestResponse(res, "Both newPassword and confirmPassword are required", null);
+    }
+
+    if (newPassword !== confirmPassword) {
+      return badRequestResponse(res, "New password and confirm password do not match", null);
+    }
+    const user = await findOneUser({ email });
+    if (!user) {
+      return notFoundResponse(res, "No user found with this email", null);
+    }
+    const isMatch = await bcrypt.compare(newPassword, user.password);
+    if (isMatch) {
+      return conflictResponse(
+        res,
+        "New password must be different from the previous password",
+        null
+      );
+    }
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    await user.save();
+
+    return successResponse(res, "Password has been successfully reset", null);
+  } catch (error) {
+    return serverErrorResponse(res, "Internal server error. Please try again later!", error.message);
+  }
+};
+export { registerUser, loginUser, changePassword, forgetPassword, verifyOtp, resetPassword };
