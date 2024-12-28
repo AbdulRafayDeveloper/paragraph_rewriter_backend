@@ -17,7 +17,7 @@ app.use(express.json());
 
 
 app.use(cors({
-  origin: '*',
+  origin: 'https://paragraph-rewriter-frontend.vercel.app', // Specify your frontend URL
   credentials: true,
 }));
 
