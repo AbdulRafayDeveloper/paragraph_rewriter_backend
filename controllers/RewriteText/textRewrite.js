@@ -13,6 +13,14 @@ const normalTextRewrite = async (req, res) => {
     if (!message) {
       return badRequestResponse(res, "All fields are mandatory", null);
     }
+    const wordCount = message.split(" ").length;
+    if (wordCount > 1500) {
+      return badRequestResponse(
+        res,
+        "Message exceeds the word limit of 1500 words",
+        null
+      );
+    }
 
     const rewrittenText = await runGroqQuery(
       message,
@@ -47,7 +55,14 @@ const fluentTextRewrite = async (req, res) => {
     if (!message) {
       return badRequestResponse(res, "All fields are mandatory", null);
     }
-
+    const wordCount = message.split(" ").length;
+    if (wordCount > 1500) {
+      return badRequestResponse(
+        res,
+        "Message exceeds the word limit of 1500 words",
+        null
+      );
+    }
     const rewrittenText = await runGroqQuery(
       message,
       "Fluent tone and dont use any kind of introductory phrases of text like 'here is te rewritten text' etc"
@@ -80,7 +95,14 @@ const formalTextRewrite = async (req, res) => {
     if (!message) {
       return badRequestResponse(res, "All fields are mandatory", null);
     }
-
+    const wordCount = message.split(" ").length;
+    if (wordCount > 1500) {
+      return badRequestResponse(
+        res,
+        "Message exceeds the word limit of 1500 words",
+        null
+      );
+    }
     const rewrittenText = await runGroqQuery(
       message,
       "Formal tone and dont use any kind of introductory phrases of text like 'here is te rewritten text' etc"
@@ -113,7 +135,14 @@ const innovativeTextRewrite = async (req, res) => {
     if (!message) {
       return badRequestResponse(res, "All fields are mandatory", null);
     }
-
+    const wordCount = message.split(" ").length;
+    if (wordCount > 1500) {
+      return badRequestResponse(
+        res,
+        "Message exceeds the word limit of 1500 words",
+        null
+      );
+    }
     const rewrittenText = await runGroqQuery(
       message,
       "Innovative tone and dont use any kind of introductory phrases of text like 'here is te rewritten text' etc"
@@ -146,7 +175,14 @@ const coherentTextRewrite = async (req, res) => {
     if (!message) {
       return badRequestResponse(res, "All fields are mandatory", null);
     }
-
+    const wordCount = message.split(" ").length;
+    if (wordCount > 1500) {
+      return badRequestResponse(
+        res,
+        "Message exceeds the word limit of 1500 words",
+        null
+      );
+    }
     const rewrittenText = await runGroqQuery(
       message,
       "Coherent tone and dont use any kind of introductory phrases of text like 'here is te rewritten text' etc"
@@ -179,7 +215,14 @@ const academicTextRewrite = async (req, res) => {
     if (!message) {
       return badRequestResponse(res, "All fields are mandatory", null);
     }
-
+    const wordCount = message.split(" ").length;
+    if (wordCount > 1500) {
+      return badRequestResponse(
+        res,
+        "Message exceeds the word limit of 1500 words",
+        null
+      );
+    }
     const rewrittenText = await runGroqQuery(
       message,
       "Academic tone and dont use any kind of introductory phrases of text like 'here is te rewritten text' etc"

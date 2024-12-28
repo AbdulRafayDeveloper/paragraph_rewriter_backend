@@ -29,7 +29,7 @@ const transporter = nodemailer.createTransport({
 //   }
 // };
 
-const sendEmail = async (to, subject, text) => {
+const sendEmail = async (to, subject, html) => {
   if (!to) {
     throw new Error('No recipients defined.');
   }
@@ -40,7 +40,7 @@ const sendEmail = async (to, subject, text) => {
     from: process.env.ADMIN_EMAIL,
     to,
     subject,
-    text,
+    html,
   };
 
   try {

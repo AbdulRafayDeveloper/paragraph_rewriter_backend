@@ -91,4 +91,64 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
-export { authenticateLoginToken, authenticateUser };
+const authenticateOtpToken = async (req, res, next) => {
+  
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return badRequestResponse(res, "Authentication token is required", null);
+  }
+
+  
+  const token = authHeader.split(" ")[1];
+
+  if (!token) {
+   return notFoundResponse(res, "Authentication token is not provided", null);
+  }
+
+  try {
+    
+    const decoded = jwt.verify(token, process.env.FORGET_PASSWORD_TOKEN);
+
+    req.otpData = decoded;
+    next();
+  } catch (error) {
+    
+    if (error.name === "TokenExpiredError") {
+      return unauthorizedResponse("Expired token, log in again");
+    } else if (error.name === "JsonWebTokenError") {
+      return unauthorizedResponse("Invalid token, log in again");
+    } else {
+      return serverErrorResponse("An unexpected error occurred");
+    }
+  }
+};
+
+const authenticateEmailToken = async (req, res, next) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return badRequestResponse(res, "Authentication token is required", null);
+  }
+
+  const token = authHeader.split(" ")[1];
+
+  if (!token) {
+    return notFoundResponse(res, "Authentication token is not provided", null);
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.RESET_PASSWORD_TOKEN);
+    req.email = decoded.email;
+    next();
+  } catch (error) {
+    if (error.name === "TokenExpiredError") {
+      return unauthorizedResponse(res, "Expired token, log in again", null);
+    } else if (error.name === "JsonWebTokenError") {
+      return unauthorizedResponse(res, "Invalid token, log in again", null);
+    } else {
+      return serverErrorResponse(res, "An unexpected error occurred", error.message);
+    }
+  }
+};
+export { authenticateLoginToken, authenticateUser, authenticateOtpToken, authenticateEmailToken};
