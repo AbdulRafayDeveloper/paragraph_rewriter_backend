@@ -6,7 +6,6 @@ import {
   deleteContact,
   countContacts,
   listContacts,
-  updateContactMessages,
 } from "../../services/contactUsServices.js";
 
 import {

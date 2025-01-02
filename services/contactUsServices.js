@@ -43,7 +43,6 @@ export {
   createContact,
   getAllContacts,
   getContactById,
-  updateContactMessages,
   deleteContact,
   countContacts,
   listContacts,
