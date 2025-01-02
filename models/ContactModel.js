@@ -1,16 +1,5 @@
 import mongoose from "mongoose";
 
-const MessageSchema = new mongoose.Schema(
-  {
-    message: {
-      type: String,
-      required: true,
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
 const ContactUsSchema = new mongoose.Schema(
   {
     name: {
@@ -21,7 +10,10 @@ const ContactUsSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    messages: [MessageSchema],
+    message: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

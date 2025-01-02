@@ -20,13 +20,7 @@ const getContactById = async (id) => {
   return contact;
 };
 
-const updateContactMessages = async (email, newMessage) => {
-  return await Contact.findOneAndUpdate(
-    { email },
-    { $push: { messages: { message: newMessage } } },
-    { new: true }
-  );
-};
+
 
 const deleteContact = async (id) => {
   const deletedContact = await Contact.findByIdAndDelete(id);
