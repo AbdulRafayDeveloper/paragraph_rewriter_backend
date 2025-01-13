@@ -32,7 +32,11 @@ const deleteUser = async (id) => {
 };
 
 const updateUser = async (user_id, data) => {
-  const updatedUser = await User.findByIdAndUpdate(user_id, { $set: data }, { new: true });
+  const updatedUser = await User.findByIdAndUpdate(
+    user_id,
+    { $set: data },
+    { new: true }
+  );
   return updatedUser;
 };
 

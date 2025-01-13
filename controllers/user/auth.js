@@ -214,6 +214,7 @@ const verifyOtp = async (req, res) => {
       return badRequestResponse(res, "OTP has expired", null);
     }
     const resetPasswordToken = jwt.sign(
+      {email},
       process.env.RESET_PASSWORD_TOKEN,
       { expiresIn: "1d" }
     );
