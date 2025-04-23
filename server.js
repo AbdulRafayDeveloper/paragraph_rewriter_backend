@@ -16,8 +16,13 @@ const app = express();
 app.use(express.json());
 
 
+// app.use(cors({
+//   origin: 'https://paragraph-rewriter-frontend.vercel.app', // Specify your frontend URL
+//   credentials: true,
+// }));
+
 app.use(cors({
-  origin: 'https://paragraph-rewriter-frontend.vercel.app', // Specify your frontend URL
+  origin: '*', // Specify your frontend URL
   credentials: true,
 }));
 
