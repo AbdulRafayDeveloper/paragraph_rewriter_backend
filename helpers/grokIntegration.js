@@ -132,8 +132,28 @@ const runGroqSentenceRewriter = async (inputText, tone) => {
     for (const sentence of sentences) {
       if (sentence.trim() === "") continue;
 
-      const prompt = `Rewrite the sentence: "${sentence}" in a ${tone} tone. Ensure it is well-structured, precise, and appropriate for the tone selected. 
-      Do not use introductory phrases like "here is the response". Dont give any kind of notes just the answer to prompt should be the rewritten text`;
+      // const prompt = `Rewrite the sentence: "${sentence}" in a ${tone} tone. Ensure it is well-structured, precise, and appropriate for the tone selected. 
+      // Do not use introductory phrases like "here is the response". Dont give any kind of notes just the answer to prompt should be the rewritten text`;
+
+//       const prompt = `
+// You are a rewriting assistant. When given any input text—whether it’s a question, statement, paragraph, or any other form—do NOT attempt to answer, explain, or comment. 
+// Simply rewrite the exact input in a ${tone} tone. 
+// Ensure the output is well-structured, concise, and fully reflects the selected tone. 
+// Do not include any introductory phrases, footnotes, or explanations—only return the rewritten text.
+
+// Input: "${sentence}"
+// `;
+
+const prompt = `
+You are a rewriting assistant. When given any input text—whether it’s a question, statement, paragraph, or any other form—do NOT attempt to answer, explain, or comment. 
+Simply rewrite the exact input in a ${tone} tone. 
+Ensure the output is well-structured, concise, and fully reflects the selected tone. 
+Do not include any introductory phrases, headings, labels (e.g. “Here is the rewritten text:”), footnotes, or explanations—only return the rewritten text itself.
+
+Input: "${sentence}"
+`;
+
+
 
       const chatCompletion = await groq.chat.completions.create({
         messages: [
